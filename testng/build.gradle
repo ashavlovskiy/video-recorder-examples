@@ -1,15 +1,4 @@
-apply plugin: 'java'
-
-sourceCompatibility = 1.5
-version = '1.0'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
-    testCompile group: 'com.codeborne', name: 'selenide', version: '3.6'
-    testCompile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.0.3'
-    testCompile project(':core')
+    testCompile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.0.4'
 }
