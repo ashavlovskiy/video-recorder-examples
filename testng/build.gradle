@@ -1,4 +1,30 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "ru.d10xa:gradle-allure-plugin:0.5.0"
+    }
+}
+
+apply plugin: 'ru.d10xa.allure'
+
+allure {
+    aspectjweaver = true
+    testNG = true
+    allureResultsDir = "$buildDir/allure-results"
+    allureReportDir = "$buildDir/allure-report"
+
+    allureVersion = "1.4.23"
+}
+
 dependencies {
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
-    testCompile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.0.4'
+    testCompile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.0.5'
 }
+
+test{
+    useTestNG()
+}
+
+tasks.withType(Test)*.finalizedBy allureReport
