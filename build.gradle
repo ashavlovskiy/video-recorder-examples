@@ -9,7 +9,7 @@ subprojects{
     }
 
     dependencies {
-        testCompile group: 'com.codeborne', name: 'selenide', version: '3.6'
+        testCompile group: 'com.codeborne', name: 'selenide', version: '3.7'
         testCompile project(':core')
     }
 }
