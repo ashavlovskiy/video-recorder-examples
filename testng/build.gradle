@@ -20,10 +20,17 @@ allure {
 
 dependencies {
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
-    testCompile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.0.5'
+    testCompile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.0.6'
+}
+
+clean << {
+    def userDir = System.getProperty("user.dir")
+    print userDir
+    delete "${userDir}/custom_folder"
 }
 
 test{
+    testLogging.showStandardStreams = true
     useTestNG()
 }
 

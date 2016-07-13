@@ -5,6 +5,7 @@ import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.RecordingMode;
 import com.automation.remarks.video.annotations.Video;
 import com.automation.remarks.video.recorder.VideoRecorder;
+import com.codeborne.selenide.Configuration;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -16,11 +17,13 @@ import static com.codeborne.selenide.Selenide.open;
 /**
  * Created by sergey on 29.06.16.
  */
-@Listeners(VideoListener.class)
+@Listeners({VideoListener.class, AllureListener.class})
 public class TestNgVideoExampleTest {
 
     @BeforeClass
     public void setUp() {
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/chromedriver");
+        Configuration.browser = "chrome";
         // Default video folder is ${user.dir}/video. Could be changed by:
         VideoRecorder.conf().withVideoFolder("custom_folder")
                 // Video could be disabled globally. Set to "true"
