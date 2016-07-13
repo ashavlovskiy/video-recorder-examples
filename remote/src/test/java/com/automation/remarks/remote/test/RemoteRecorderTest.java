@@ -4,6 +4,7 @@ import com.automation.remarks.pages.MainPage;
 import com.automation.remarks.remote.StartGrid;
 import com.automation.remarks.testng.RemoteVideoListener;
 import com.automation.remarks.video.annotations.Video;
+import com.automation.remarks.video.recorder.VideoRecorder;
 import com.codeborne.selenide.Configuration;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -24,12 +25,13 @@ public class RemoteRecorderTest {
         String[] args = {};
         StartGrid.main(args);
         Thread.sleep(1000);
+        Configuration.remote = "http://localhost:4444/wd/hub";
+        VideoRecorder.conf().withVideoFolder("video_folder");
     }
 
     @Test
     @Video
     public void shouldBeALotOfArticles(){
-        Configuration.remote = "http://localhost:4444/wd/hub";
         open(URL, MainPage.class).
                 posts.shouldHaveSize(9);
     }
