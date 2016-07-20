@@ -2,6 +2,7 @@ package com.automation.remarks.testng.test;
 
 import com.automation.remarks.pages.MainPage;
 import com.automation.remarks.testng.VideoListener;
+import com.automation.remarks.video.RecorderType;
 import com.automation.remarks.video.RecordingMode;
 import com.automation.remarks.video.annotations.Video;
 import com.automation.remarks.video.recorder.VideoRecorder;
@@ -27,7 +28,8 @@ public class TestNgVideoExampleTest {
         // Default video folder is ${user.dir}/video. Could be changed by:
         VideoRecorder.conf().withVideoFolder("custom_folder")
                 // Video could be disabled globally. Set to "true"
-                .videoEnabled(true)
+                .videoEnabled(false)
+                .withRecorderType(RecorderType.FFMPEG)
                 // There is two recording modes ANNOTATED AND ALL
                 // Annotated is default and works only with methods annotated by @Video
                 .withRecordMode(RecordingMode.ANNOTATED);
@@ -47,6 +49,7 @@ public class TestNgVideoExampleTest {
     public void shouldBeAllPostsAtPage() {
         open(URL, MainPage.class)
                 .posts.shouldHaveSize(9);
+
     }
 
     @Test
@@ -54,6 +57,6 @@ public class TestNgVideoExampleTest {
     // If test fails, video will be saved with method name
     public void shouldBeALotOfVisitors() {
         open(URL, MainPage.class)
-                .userCounter.shouldHave(text("36567"));
+                .userCounter.scrollTo().shouldHave(text("36567"));
     }
 }
