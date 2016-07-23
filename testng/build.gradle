@@ -25,7 +25,9 @@ dependencies {
 }
 
 test{
-    systemProperty['JENKINS_URL'] = System.properties['JENKINS_URL']
+    systemProperties = [
+            JENKINS_URL: System.getProperty('JENKINS_URL')
+    ]
     testLogging.showStandardStreams = true
     ignoreFailures = true
     useTestNG()
