@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import static org.awaitility.Awaitility.await;
 
@@ -18,6 +19,9 @@ import static org.awaitility.Awaitility.await;
  * Created by sergey on 13.07.16.
  */
 public class AllureListener implements ITestListener {
+
+    private static final Logger log = Logger.getLogger(AllureListener.class.getName());
+
     @Override
     public void onTestStart(ITestResult result) {
 
@@ -67,10 +71,11 @@ public class AllureListener implements ITestListener {
             await().atMost(5, TimeUnit.SECONDS)
                     .pollDelay(1, TimeUnit.SECONDS)
                     .ignoreExceptions()
-                    .until(() ->video != null);
+                    .until(() -> video != null);
 
             return Files.readAllBytes(video.toPath());
         } catch (IOException e) {
+            log.warning("Allure listener exception" + e);
             return new byte[0];
         }
     }
