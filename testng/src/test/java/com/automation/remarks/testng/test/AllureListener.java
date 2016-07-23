@@ -64,7 +64,7 @@ public class AllureListener implements ITestListener {
         try {
             File video = VideoRecorder.getLastRecording();
             await().atMost(5, TimeUnit.SECONDS)
-                    .pollDelay(30, TimeUnit.MILLISECONDS)
+                    .pollDelay(1, TimeUnit.SECONDS)
                     .ignoreExceptions()
                     .until(() ->video != null);
 
