@@ -28,7 +28,7 @@ public class TestNgVideoExampleTest {
         // Default video folder is ${user.dir}/video. Could be changed by:
         VideoRecorder.conf().withVideoFolder("custom_folder")
                 // Video could be disabled globally. Set to "true"
-                .videoEnabled(false)
+                .videoEnabled(true)
                 .withRecorderType(RecorderType.FFMPEG)
                 // There is two recording modes ANNOTATED AND ALL
                 // Annotated is default and works only with methods annotated by @Video
@@ -40,7 +40,7 @@ public class TestNgVideoExampleTest {
     // Video file name could be changed
     public void shouldBe10PostsAtPage() {
         open(URL, MainPage.class).
-                posts.shouldHaveSize(9);
+                posts.shouldHaveSize(10);
     }
 
     @Test
