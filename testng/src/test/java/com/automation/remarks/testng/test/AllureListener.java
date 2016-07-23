@@ -2,6 +2,7 @@ package com.automation.remarks.testng.test;
 
 import com.automation.remarks.video.annotations.Video;
 import com.automation.remarks.video.recorder.VideoRecorder;
+import org.awaitility.core.ConditionTimeoutException;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 
 import static org.awaitility.Awaitility.await;
 
@@ -70,7 +72,7 @@ public class AllureListener implements ITestListener {
                     .until(() ->video != null);
 
             return Files.readAllBytes(video.toPath());
-        } catch (IOException e) {
+        } catch (Exception e) {
             return new byte[0];
         }
     }
