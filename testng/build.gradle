@@ -26,7 +26,7 @@ dependencies {
 
 test{
     systemProperties = [
-            JENKINS_URL: System.getProperty('JENKINS_URL')
+            jenkins_url: System.getProperty('jenkins_url')
     ]
     testLogging.showStandardStreams = true
     ignoreFailures = true
