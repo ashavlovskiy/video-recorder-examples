@@ -31,7 +31,6 @@ clean << {
 }
 
 test{
-    systemProperties System.getProperties()
     testLogging.showStandardStreams = true
     ignoreFailures = true
     useTestNG()
