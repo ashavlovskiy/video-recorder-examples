@@ -24,13 +24,10 @@ dependencies {
     compile group: 'org.awaitility', name: 'awaitility', version: '2.0.0'
 }
 
-clean << {
-    def userDir = System.getProperty("user.dir")
-    print userDir
-    delete "${userDir}/custom_folder"
-}
-
 test{
+    systemProperties = [
+            jenkins_url: System.getProperty('jenkins_url')
+    ]
     testLogging.showStandardStreams = true
     ignoreFailures = true
     useTestNG()

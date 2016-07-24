@@ -10,6 +10,7 @@ import ru.yandex.qatools.allure.annotations.Attachment;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -73,7 +74,7 @@ public class AllureListener implements ITestListener {
                     .ignoreExceptions()
                     .until(() -> video != null);
 
-            return Files.readAllBytes(video.toPath());
+            return Files.readAllBytes(Paths.get(video.getAbsolutePath()));
         } catch (IOException e) {
             log.warning("Allure listener exception" + e);
             return new byte[0];
