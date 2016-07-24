@@ -2,6 +2,7 @@ package com.automation.remarks.testng.test;
 
 import com.automation.remarks.pages.MainPage;
 import com.automation.remarks.testng.VideoListener;
+import com.automation.remarks.video.RecorderType;
 import com.automation.remarks.video.RecordingMode;
 import com.automation.remarks.video.annotations.Video;
 import com.automation.remarks.video.recorder.VideoRecorder;
@@ -28,7 +29,7 @@ public class TestNgVideoExampleTest {
         VideoRecorder.conf().withVideoFolder("custom_folder")
                 // Video could be disabled globally. Set to "true"
                 .videoEnabled(true)
-                //.withRecorderType(RecorderType.FFMPEG)
+                .withRecorderType(RecorderType.FFMPEG)
                 // There is two recording modes ANNOTATED AND ALL
                 // Annotated is default and works only with methods annotated by @Video
                 .withRecordMode(RecordingMode.ANNOTATED);
