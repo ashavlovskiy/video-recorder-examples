@@ -1,4 +1,4 @@
 dependencies {
-    testCompile group: 'com.automation-remarks', name: 'video-recorder-junit', version: '1.0.4'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'com.automation-remarks', name: 'video-recorder-junit', version: '1.0.8'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }

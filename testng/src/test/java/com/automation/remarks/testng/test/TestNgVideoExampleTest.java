@@ -2,9 +2,10 @@ package com.automation.remarks.testng.test;
 
 import com.automation.remarks.pages.MainPage;
 import com.automation.remarks.testng.VideoListener;
-import com.automation.remarks.video.RecorderType;
-import com.automation.remarks.video.RecordingMode;
 import com.automation.remarks.video.annotations.Video;
+import com.automation.remarks.video.enums.RecorderType;
+import com.automation.remarks.video.enums.RecordingMode;
+import com.automation.remarks.video.enums.VideoSaveMode;
 import com.automation.remarks.video.recorder.VideoRecorder;
 import com.codeborne.selenide.Configuration;
 import org.testng.annotations.BeforeClass;
@@ -32,7 +33,7 @@ public class TestNgVideoExampleTest {
                 .withRecorderType(RecorderType.FFMPEG)
                 // There is two recording modes ANNOTATED AND ALL
                 // Annotated is default and works only with methods annotated by @Video
-                .withRecordMode(RecordingMode.ANNOTATED);
+                .withRecordMode(RecordingMode.ANNOTATED).withVideoSaveMove(VideoSaveMode.ALL);
     }
 
     @Test
