@@ -19,7 +19,7 @@ import static com.codeborne.selenide.Selenide.open;
 /**
  * Created by sergey on 29.06.16.
  */
-@Listeners({VideoListener.class, AllureListener.class})
+@Listeners({AllureListener.class})
 public class TestNgVideoExampleTest {
 
     @BeforeClass
@@ -33,7 +33,8 @@ public class TestNgVideoExampleTest {
                 .withRecorderType(RecorderType.FFMPEG)
                 // There is two recording modes ANNOTATED AND ALL
                 // Annotated is default and works only with methods annotated by @Video
-                .withRecordMode(RecordingMode.ANNOTATED).withVideoSaveMove(VideoSaveMode.ALL);
+                .withRecordMode(RecordingMode.ANNOTATED)
+                .withVideoSaveMode(VideoSaveMode.FAILED_ONLY);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class TestNgVideoExampleTest {
     }
 
     @Test
-    @Video(enabled = false)
+    @Video()
     // Video recording could be disabled for single test
     public void shouldBeAllPostsAtPage() {
         open(URL, MainPage.class)
