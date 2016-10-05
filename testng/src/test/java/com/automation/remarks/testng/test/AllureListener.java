@@ -9,15 +9,18 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.annotations.Listeners;
 import ru.yandex.qatools.allure.annotations.Attachment;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by sergey on 13.07.16.
@@ -28,54 +31,30 @@ public class AllureListener extends VideoListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        super.onTestStart(result);
-    }
-
-    @Override
-    public void onTestSuccess(ITestResult result) {
-        super.onTestSuccess(result);
-    }
-
-    @Override
-    public void onTestFailure(ITestResult result) {
-        super.onTestFailure(result);
-        Video video = result.getMethod().getConstructorOrMethod().getMethod().getDeclaredAnnotation(Video.class);
-        if (VideoRecorder.conf().isVideoEnabled() && video != null)
-            try {
-                attachment();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        try {
-            sendFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (shouldIntercept(result.getTestClass().getRealClass())) {
+            super.onTestStart(result);
         }
     }
 
     @Override
-    public void onTestSkipped(ITestResult result) {
-        super.onTestSkipped(result);
+    public void onTestSuccess(ITestResult result) {
+        if (shouldIntercept(result.getTestClass().getRealClass())) {
+            super.onTestSuccess(result);
+        }
     }
 
     @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        super.onTestFailedButWithinSuccessPercentage(result);
+    public void onTestFailure(ITestResult result) {
+        if (shouldIntercept(result.getTestClass().getRealClass())) {
+            super.onTestFailure(result);
+            Video video = result.getMethod().getConstructorOrMethod().getMethod().getDeclaredAnnotation(Video.class);
+            if (VideoRecorder.conf().isVideoEnabled() && video != null)
+                attachment();
+        }
     }
-
-    @Override
-    public void onStart(ITestContext context) {
-
-    }
-
-    @Override
-    public void onFinish(ITestContext context) {
-
-    }
-
 
     @Attachment(value = "video", type = "video/mp4")
-    private byte[] attachment() throws InterruptedException {
+    private byte[] attachment() {
         try {
             File video = VideoRecorder.getLastRecording();
             return Files.readAllBytes(Paths.get(video.getAbsolutePath()));
@@ -83,6 +62,17 @@ public class AllureListener extends VideoListener {
             log.warning("Allure listener exception" + e);
             return new byte[0];
         }
+    }
+
+    boolean shouldIntercept(Class testClass) {
+        Listeners listenersAnnotation = getListenersAnnotation(testClass);
+        return listenersAnnotation != null && asList(listenersAnnotation.value()).contains(this.getClass());
+    }
+
+    Listeners getListenersAnnotation(Class testClass) {
+        Annotation annotation = testClass.getAnnotation(Listeners.class);
+        return annotation != null ? (Listeners) annotation :
+                testClass.getSuperclass() != null ? getListenersAnnotation(testClass.getSuperclass()) : null;
     }
 
     private void sendFile() throws IOException {
