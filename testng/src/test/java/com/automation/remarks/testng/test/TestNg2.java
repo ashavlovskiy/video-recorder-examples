@@ -8,6 +8,7 @@ import com.automation.remarks.video.enums.RecordingMode;
 import com.automation.remarks.video.enums.VideoSaveMode;
 import com.automation.remarks.video.recorder.VideoRecorder;
 import com.codeborne.selenide.Configuration;
+import com.listener.TestListener;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -17,10 +18,10 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.open;
 
 /**
- * Created by sergey on 29.06.16.
+ * Created by sepi on 05.10.16.
  */
 @Listeners({VideoListener.class})
-public class TestNgVideoExampleTest {
+public class TestNg2 {
 
     @BeforeClass
     public void setUp() {
@@ -41,7 +42,7 @@ public class TestNgVideoExampleTest {
     @Test
     @Video(name = "checkPostsNumberPerPage")
     // Video file name could be changed
-    public void shouldBe10PostsAtPage() throws InterruptedException {
+    public void test2() throws InterruptedException {
         open(URL, MainPage.class).
                 posts.shouldHaveSize(10);
     }
@@ -49,16 +50,18 @@ public class TestNgVideoExampleTest {
     @Test
     @Video()
     // Video recording could be disabled for single test
-    public void shouldBeAllPostsAtPage() throws InterruptedException {
+    public void test1() throws InterruptedException {
         open(URL, MainPage.class)
                 .posts.shouldHaveSize(9);
+
     }
 
     @Test
     @Video
     // If test fails, video will be saved with method name
-    public void shouldBeALotOfVisitors() {
+    public void test3() {
         open(URL, MainPage.class)
                 .userCounter.scrollTo().shouldHave(text("36567"));
     }
+
 }

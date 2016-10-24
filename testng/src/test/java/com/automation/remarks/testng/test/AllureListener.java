@@ -3,12 +3,14 @@ package com.automation.remarks.testng.test;
 import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import com.automation.remarks.video.recorder.VideoRecorder;
+import com.listener.TestListener;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.Listeners;
 import ru.yandex.qatools.allure.annotations.Attachment;
@@ -31,21 +33,21 @@ public class AllureListener extends VideoListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        if (shouldIntercept(result.getTestClass().getRealClass())) {
+        if (shouldIntercept(result.getTestClass().getRealClass(), this.getClass())) {
             super.onTestStart(result);
         }
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        if (shouldIntercept(result.getTestClass().getRealClass())) {
+        if (shouldIntercept(result.getTestClass().getRealClass(), this.getClass())) {
             super.onTestSuccess(result);
         }
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        if (shouldIntercept(result.getTestClass().getRealClass())) {
+        if (shouldIntercept(result.getTestClass().getRealClass(), this.getClass())) {
             super.onTestFailure(result);
             Video video = result.getMethod().getConstructorOrMethod().getMethod().getDeclaredAnnotation(Video.class);
             if (VideoRecorder.conf().isVideoEnabled() && video != null)
@@ -64,16 +66,6 @@ public class AllureListener extends VideoListener {
         }
     }
 
-    boolean shouldIntercept(Class testClass) {
-        Listeners listenersAnnotation = getListenersAnnotation(testClass);
-        return listenersAnnotation != null && asList(listenersAnnotation.value()).contains(this.getClass());
-    }
-
-    Listeners getListenersAnnotation(Class testClass) {
-        Annotation annotation = testClass.getAnnotation(Listeners.class);
-        return annotation != null ? (Listeners) annotation :
-                testClass.getSuperclass() != null ? getListenersAnnotation(testClass.getSuperclass()) : null;
-    }
 
     private void sendFile() throws IOException {
         File recording = VideoRecorder.getLastRecording();

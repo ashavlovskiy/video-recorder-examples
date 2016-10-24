@@ -2,12 +2,13 @@ package com.automation.remarks.junit.test;
 
 import com.automation.remarks.junit.VideoRule;
 import com.automation.remarks.pages.MainPage;
-import com.automation.remarks.video.RecordingMode;
 import com.automation.remarks.video.annotations.Video;
+import com.automation.remarks.video.enums.RecordingMode;
 import com.automation.remarks.video.recorder.VideoRecorder;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import static com.automation.remarks.pages.MainPage.URL;
 import static com.codeborne.selenide.Condition.text;
@@ -19,7 +20,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class JunitRuleExampleTest {
 
     @Rule
-    public VideoRule videoRule = new VideoRule();
+    public TestRule videoRule = new VideoRule();
 
     @Before
     public void setUp() {
