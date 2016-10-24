@@ -1,13 +1,13 @@
 package com.automation.remarks.testng.test;
 
 import com.automation.remarks.pages.MainPage;
-import com.automation.remarks.testng.VideoListener;
 import com.automation.remarks.video.annotations.Video;
 import com.automation.remarks.video.enums.RecorderType;
 import com.automation.remarks.video.enums.RecordingMode;
 import com.automation.remarks.video.enums.VideoSaveMode;
 import com.automation.remarks.video.recorder.VideoRecorder;
 import com.codeborne.selenide.Configuration;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -19,12 +19,12 @@ import static com.codeborne.selenide.Selenide.open;
 /**
  * Created by sergey on 29.06.16.
  */
-@Listeners({VideoListener.class})
+@Listeners({AllureListener.class})
 public class TestNgVideoExampleTest {
 
     @BeforeClass
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/Users/sepi/chromedriver");
+        ChromeDriverManager.getInstance().setup();
         Configuration.browser = "chrome";
         // Default video folder is ${user.dir}/video. Could be changed by:
         VideoRecorder.conf().withVideoFolder("custom_folder")
@@ -52,6 +52,7 @@ public class TestNgVideoExampleTest {
     public void shouldBeAllPostsAtPage() throws InterruptedException {
         open(URL, MainPage.class)
                 .posts.shouldHaveSize(9);
+
     }
 
     @Test

@@ -10,7 +10,8 @@ subprojects{
     }
 
     dependencies {
-        testCompile group: 'com.codeborne', name: 'selenide', version: '3.7'
+        testCompile group: 'com.codeborne', name: 'selenide', version: '4.0'
+        compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '1.4.10'
         testCompile project(':core')
     }
 }
